@@ -33,11 +33,7 @@ export async function POST(request: NextRequest) {
     // Generate streaming AI response
     const result = streamText({
       ...aiConfig,
-      prompt: `You are a helpful AI assistant. Please respond to the following message in a friendly, informative, and helpful way. Keep your response concise but thorough.
-
-User message: ${prompt}
-
-Your response:`,
+      prompt: getChatPrompt(prompt),
     });
 
     return result.toUIMessageStreamResponse();
@@ -55,3 +51,9 @@ Your response:`,
     );
   }
 }
+
+// get prompet from the user
+const getChatPrompt = (prompt: string) => {
+  return `You are a helpful AI assistant. Please respond to the following message in a friendly, informative, and helpful way. Keep your response concise but thorough.
+  User message: ${prompt}`;
+};
